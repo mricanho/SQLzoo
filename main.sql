@@ -312,3 +312,55 @@ END score2
 FROM game x JOIN goal ON matchid = id
 GROUP BY id, mdate, team1, teamid, team2
 ORDER BY mdate;
+
+-- Tutorial 7
+
+SELECT id, title
+FROM movie
+WHERE yr=1962;
+
+SELECT yr FROM movie
+WHERE title = 'Citizen Kane';
+
+SELECT id, title, yr FROM movie
+WHERE title like '%Star Trek%'
+ORDER BY yr;
+
+SELECT id FROM actor
+WHERE name = 'Glenn Close';
+
+SELECT id FROM movie
+WHERE title = 'Casablanca';
+
+SELECT name FROM movie a
+JOIN casting b ON a.id=b.movieid
+JOIN actor c ON b.actorid=c.id
+WHERE a.id=11768;
+
+SELECT name FROM movie a
+JOIN casting b ON a.id=b.movieid
+JOIN actor c ON b.actorid=c.id
+WHERE a.title = 'Alien';
+
+SELECT title FROM movie a
+JOIN casting b ON a.id=b.movieid
+JOIN actor c ON b.actorid=c.id
+WHERE c.name = 'Harrison Ford';
+
+SELECT title FROM movie a
+JOIN casting b ON a.id=b.movieid
+JOIN actor c ON b.actorid=c.id
+WHERE c.name = 'Harrison Ford'
+AND b.ord !=1;
+
+SELECT a.title, c.name FROM movie a
+JOIN casting b ON a.id=b.movieid
+JOIN actor c ON b.actorid=c.id
+WHERE b.ord = 1;
+
+SELECT yr,COUNT(title) FROM movie 
+JOIN casting ON movie.id=movieid
+JOIN actor   ON actorid=actor.id
+WHERE name='Rock Hudson'
+GROUP BY yr
+HAVING COUNT(title) > 2;
