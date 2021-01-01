@@ -162,13 +162,13 @@ SELECT yr, subject, winner FROM nobel
   WHERE (subject = 'Medicine' AND yr < 1910)
   OR (subject = 'Literature' AND yr >= 2004);
 
-SELECT * from nobel
+SELECT * FROM nobel
 WHERE winner = 'PETER GRÜNBERG';
 
-SELECT * from nobel
+SELECT * FROM nobel
 WHERE winner = "EUGENE O\'NEILL";
 
-SELECT winner, yr, subject from nobel
+SELECT winner, yr, subject FROM nobel
 WHERE winner LIKE 'Sir%'
 ORDER BY yr DESC,winner;
 
@@ -176,3 +176,45 @@ SELECT winner, subject
 FROM nobel
 WHERE yr=1984
 ORDER BY subject IN ('Physics','Chemistry'),subject,winner;
+
+-- Tutorial 4
+
+SELECT name FROM world
+WHERE population >
+(SELECT population FROM world
+WHERE name='Russia');
+
+SELECT name
+FROM world
+WHERE continent = 'Europe' AND
+gdp/population > ( SELECT gdp/population FROM world WHERE name = 'United Kingdom');
+
+SELECT name, continent FROM world
+WHERE continent = (SELECT continent FROM world WHERE name = 'Argentina')
+or continent = (SELECT continent FROM world WHERE name = 'Australia')
+ORDER BY name;
+
+SELECT name, population FROM world
+WHERE population > (SELECT population FROM world WHERE name = 'Canada')
+AND population < (SELECT population FROM world WHERE name = 'Polonia');
+
+SELECT name, 
+concat(round(100*population/(SELECT population FROM world WHERE name = 'Germany')),'%')
+FROM world
+WHERE continent = 'Europe';
+
+SELECT name FROM world 
+WHERE gdp > (SELECT max(gdp) FROM world WHERE continent = 'Europe');
+
+SELECT continent, name, area FROM world x
+WHERE area >= ALL
+(SELECT area FROM world y
+WHERE y.continent=x.continent
+AND area>0);
+
+SELECT continent, min(name) as name FROM world
+GROUP BY continent
+ORDER BY continent;
+
+SELECT continent, sum(population) as pop FROM world a
+GROUP BY continent;
