@@ -103,5 +103,18 @@ WHERE gdp >= 1000000000000;
 
 SELECT name, capital
   FROM world
- WHERE LENGTH(name) = LENGTH(capital);
+  WHERE LENGTH(name) = LENGTH(capital);
 
+SELECT name, capital
+  FROM world
+  WHERE left(name, 1) = left(capital, 1)
+  AND name != capital;
+
+SELECT name
+  FROM world
+  WHERE name not LIKE '% %'
+  AND name LIKE '%a%'
+  AND name LIKE '%e%'
+  AND name LIKE '%i%'
+  AND name LIKE '%o%'
+  AND name LIKE '%u%';
