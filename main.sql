@@ -148,7 +148,7 @@ SELECT * FROM nobel
   WHERE winner IN ('Theodore Roosevelt', 'Woodrow Wilson', 'Jimmy Carter', 'Barack Obama');
 
 SELECT winner FROM nobel
-  WHERE winner like 'John %';
+  WHERE winner LIKE 'John %';
 
 SELECT yr, subject, winner FROM nobel
   WHERE (yr = 1980 AND subject = 'Physics')
@@ -161,3 +161,18 @@ SELECT yr, subject, winner FROM nobel
 SELECT yr, subject, winner FROM nobel
   WHERE (subject = 'Medicine' AND yr < 1910)
   OR (subject = 'Literature' AND yr >= 2004);
+
+SELECT * from nobel
+WHERE winner = 'PETER GRÜNBERG';
+
+SELECT * from nobel
+WHERE winner = "EUGENE O\'NEILL";
+
+SELECT winner, yr, subject from nobel
+WHERE winner LIKE 'Sir%'
+ORDER BY yr DESC,winner;
+
+SELECT winner, subject
+FROM nobel
+WHERE yr=1984
+ORDER BY subject IN ('Physics','Chemistry'),subject,winner;
