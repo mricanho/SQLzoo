@@ -364,3 +364,23 @@ JOIN actor   ON actorid=actor.id
 WHERE name='Rock Hudson'
 GROUP BY yr
 HAVING COUNT(title) > 2;
+
+-- Tutorial 8 
+-- Null
+
+SELECT name from teacher
+WHERE dept IS NULL;
+
+SELECT teacher.name, dept.name
+FROM teacher JOIN dept
+ON (teacher.dept=dept.id);
+
+SELECT teacher.name, dept.name
+FROM teacher LEFT JOIN dept
+ON (teacher.dept=dept.id);
+
+SELECT teacher.name, dept.name
+FROM teacher RIGHT JOIN dept
+ON (teacher.dept=dept.id);
+
+SELECT name, COALESCE(mobile, '07986 444 2266') FROM teacher;
