@@ -368,7 +368,7 @@ HAVING COUNT(title) > 2;
 -- Tutorial 8 
 -- Null
 
-SELECT name from teacher
+SELECT name FROM teacher
 WHERE dept IS NULL;
 
 SELECT teacher.name, dept.name
@@ -470,3 +470,14 @@ FROM ge x
 WHERE constituency like 'S%'
 AND yr  = 2017 AND votes >= ALL(SELECT votes FROM ge y  WHERE x.constituency = y. constituency AND y.yr = 2017)
 GROUP BY party;
+
+-- Self join
+
+SELECT count(id) FROM stops;
+
+SELECT id FROM stops where name = 'Craiglockhart';
+
+SELECT id, name FROM stops, route
+WHERE id=stop
+AND company='LRT'
+AND num='4';
