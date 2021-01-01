@@ -222,29 +222,57 @@ GROUP BY continent;
 -- Tutorial 5
 
 SELECT SUM(population)
-FROM world
+FROM world;
 
 SELECT continent FROM world
-GROUP BY continent
+GROUP BY continent;
 
 SELECT sum(gdp) FROM world
-WHERE continent = 'Africa'
+WHERE continent = 'Africa';
 
 SELECT count(name) FROM world
-WHERE area >= 1000000
+WHERE area >= 1000000;
 
 SELECT sum(population) FROM world
-WHERE name IN('Estonia', 'Latvia', 'Lithuania')
+WHERE name IN('Estonia', 'Latvia', 'Lithuania');
 
 SELECT continent, count(name) FROM world
-GROUP BY continent
+GROUP BY continent;
 
 SELECT continent, count(name) FROM world
 WHERE population >= 10000000
-GROUP BY continent
+GROUP BY continent;
 
 SELECT continent FROM world a
 WHERE 
 (SELECT sum(population) FROM world WHERE continent = a.continent GROUP BY continent) >= 100000000
-GROUP BY continent
+GROUP BY continent;
 
+-- Tutorial 6
+
+SELECT matchid, player FROM goal 
+WHERE teamid = 'GER';
+
+SELECT id,stadium,team1,team2
+FROM game
+WHERE id = 1012;
+
+SELECT player, teamid, stadium, mdate
+FROM game JOIN goal ON (id=matchid)
+WHERE goal.teamid = 'GER';
+
+SELECT team1, team2, player FROM game
+JOIN goal ON id=matchid
+WHERE player like 'Mario%'
+
+SELECT player, teamid, coach, gtime
+FROM goal JOIN eteam ON teamid=id
+WHERE gtime<=10;
+
+SELECT mdate, teamname FROM game
+JOIN eteam ON team1=eteam.id
+WHERE coach = 'Fernando Santos';
+
+SELECT player FROM goal
+JOIN game ON matchid=id
+WHERE stadium = 'National Stadium, Warsaw';
