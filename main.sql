@@ -77,7 +77,7 @@ SELECT name, (population / 1000000) population_in_millions
 
 SELECT name, population
   FROM world
-  WHERE name in('France', 'Germany', 'Italy');
+  WHERE name IN('France', 'Germany', 'Italy');
 
 SELECT name
 FROM world
@@ -218,3 +218,33 @@ ORDER BY continent;
 
 SELECT continent, sum(population) as pop FROM world a
 GROUP BY continent;
+
+-- Tutorial 5
+
+SELECT SUM(population)
+FROM world
+
+SELECT continent FROM world
+GROUP BY continent
+
+SELECT sum(gdp) FROM world
+WHERE continent = 'Africa'
+
+SELECT count(name) FROM world
+WHERE area >= 1000000
+
+SELECT sum(population) FROM world
+WHERE name IN('Estonia', 'Latvia', 'Lithuania')
+
+SELECT continent, count(name) FROM world
+GROUP BY continent
+
+SELECT continent, count(name) FROM world
+WHERE population >= 10000000
+GROUP BY continent
+
+SELECT continent FROM world a
+WHERE 
+(SELECT sum(population) FROM world WHERE continent = a.continent GROUP BY continent) >= 100000000
+GROUP BY continent
+
