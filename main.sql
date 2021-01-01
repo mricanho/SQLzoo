@@ -86,7 +86,7 @@ WHERE name LIKE '%United%';
 SELECT name, population, area
 FROM world
 WHERE area >= 3000000
-or population >= 250000000;
+OR population >= 250000000;
 
 SELECT name, population, area
 FROM world
@@ -191,7 +191,7 @@ gdp/population > ( SELECT gdp/population FROM world WHERE name = 'United Kingdom
 
 SELECT name, continent FROM world
 WHERE continent = (SELECT continent FROM world WHERE name = 'Argentina')
-or continent = (SELECT continent FROM world WHERE name = 'Australia')
+OR continent = (SELECT continent FROM world WHERE name = 'Australia')
 ORDER BY name;
 
 SELECT name, population FROM world
@@ -279,7 +279,7 @@ WHERE stadium = 'National Stadium, Warsaw';
 
 SELECT distinct(player)
 FROM game JOIN goal ON matchid = id 
-WHERE (team1='GER' or team2='GER')
+WHERE (team1='GER' OR team2='GER')
 AND teamid != 'GER';
 
 SELECT teamname, count(gtime)
@@ -384,3 +384,57 @@ FROM teacher RIGHT JOIN dept
 ON (teacher.dept=dept.id);
 
 SELECT name, COALESCE(mobile, '07986 444 2266') FROM teacher;
+
+-- Numeric
+
+SELECT A_STRONGLY_AGREE
+  FROM nss
+ WHERE question='Q01'
+   AND institution='Edinburgh Napier University'
+   AND subject='(8) Computer Science'
+
+SELECT institution, subject
+FROM nss
+WHERE question='Q15'
+AND score>=100;
+
+SELECT institution,score
+FROM nss
+WHERE question='Q15'
+AND score<50
+AND subject='(8) Computer Science';
+
+SELECT subject, sum(response)
+FROM nss
+WHERE question='Q22'
+AND (subject='(8) Computer Science' OR subject='(H) Creative Arts and Design')
+GROUP BY subject;
+
+SELECT subject, sum(response*A_STRONGLY_AGREE*.01) 
+FROM nss
+WHERE question='Q22'
+AND (subject='(8) Computer Science' OR subject='(H) Creative Arts and Design')
+GROUP BY subject;
+
+SELECT subject, round(sum(response*A_STRONGLY_AGREE/100)/sum(response)*100,0)
+FROM nss
+WHERE question='Q22'
+AND (subject='(8) Computer Science' OR subject='(H) Creative Arts and Design')
+GROUP BY subject;
+
+SELECT institution, ROUND(SUM(response*score/100)/SUM(response)*100,0)
+FROM nss
+WHERE question='Q22'
+AND (institution LIKE '%Manchester%')
+GROUP BY institution
+ORDER BY institution;
+
+SELECT institution, sum(sample),
+(SELECT sample FROM nss y
+WHERE subject='(8) Computer Science'
+AND x.institution = y.institution
+AND question='Q01')
+FROM nss x
+WHERE question='Q01'
+AND (institution LIKE '%Manchester%')
+GROUP BY institution;
