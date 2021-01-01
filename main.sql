@@ -276,3 +276,39 @@ WHERE coach = 'Fernando Santos';
 SELECT player FROM goal
 JOIN game ON matchid=id
 WHERE stadium = 'National Stadium, Warsaw';
+
+SELECT distinct(player)
+FROM game JOIN goal ON matchid = id 
+WHERE (team1='GER' or team2='GER')
+AND teamid != 'GER';
+
+SELECT teamname, count(gtime)
+FROM eteam JOIN goal ON id=teamid
+GROUP BY teamname
+ORDER BY teamname;
+
+SELECT stadium, count(gtime) FROM game
+JOIN goal ON id=matchid
+GROUP BY stadium;
+
+SELECT matchid,mdate, count(gtime)
+FROM game JOIN goal ON matchid = id 
+WHERE (team1 = 'POL' OR team2 = 'POL')
+GROUP BY matchid, mdate;
+
+SELECT matchid,mdate, count(gtime)
+FROM game JOIN goal ON matchid = id 
+WHERE (team1 = 'GER' OR team2 = 'GER')
+AND teamid = 'GER'
+GROUP BY matchid, mdate;
+
+SELECT id,mdate, team1,
+CASE WHEN teamid=team1 THEN 
+(SELECT count(gtime) FROM goal WHERE teamid = team1 AND matchid = id) else 0
+END score1, team2,
+CASE WHEN teamid=team2 THEN 
+(SELECT count(gtime) FROM goal WHERE teamid = team2 AND matchid = id) else 0
+END score2
+FROM game x JOIN goal ON matchid = id
+GROUP BY id, mdate, team1, teamid, team2
+ORDER BY mdate;
